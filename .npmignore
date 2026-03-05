@@ -1,0 +1,23 @@
+// ignore git, build, test models, and vendor SDKs
+.git/
+.gitignore
+node_modules/
+tests/
+examples/
+ios/build/
+android/build/
+android/.cxx/
+android/.gradle/
+
+# Ignore big vendor SDKs to save space on npm
+# NOTE: Users of this package will need to provide their own Cubism SDK Core 
+# because it's proprietary and shouldn't be redistributed via npm.
+android/src/main/cpp/vendor/
+ios/vendor/
+ios/Libraries/
+
+# Ignore example models and sounds
+android/src/main/assets/live2d_models/
+ios/live2d_models/
+
+# But KEEP all source files and CMakeLists!

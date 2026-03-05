@@ -1,0 +1,27 @@
+{
+  "name": "expo-live2d-cubism",
+  "version": "1.0.1",
+  "description": "Cross-platform Live2D native module for Expo and React Native",
+  "main": "index.ts",
+  "keywords": [
+    "react-native",
+    "expo",
+    "live2d",
+    "cubism"
+  ],
+  "author": "chaoyangooo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chaoyangooo/expo-live2d-cubism.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chaoyangooo/expo-live2d-cubism/issues"
+  },
+  "homepage": "https://github.com/chaoyangooo/expo-live2d-cubism#readme",
+  "license": "MIT",
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  }
+}
