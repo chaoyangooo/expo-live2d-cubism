@@ -1,6 +1,10 @@
 {
   "name": "expo-live2d-cubism",
   "version": "1.0.1",
+  "scripts": {
+    "build:plugin": "cd plugin && npx tsc",
+    "clean:plugin": "rm -rf plugin/build"
+  },
   "description": "Cross-platform Live2D native module for Expo and React Native",
   "main": "index.ts",
   "keywords": [
