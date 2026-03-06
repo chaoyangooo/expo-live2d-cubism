@@ -107,6 +107,13 @@ class ExpoLive2DView: ExpoView {
     live2dAdapter?.releaseModel()
     live2dAdapter = nil
     live2dAdapter = Live2DObjCAdapter(modelPath: path)
+    
+    if let adapter = live2dAdapter {
+      let groups = adapter.availableMotionGroups()
+      onLoad([
+        "motionGroups": groups
+      ])
+    }
   }
   
   public func playMotion(group: String, index: Int) {

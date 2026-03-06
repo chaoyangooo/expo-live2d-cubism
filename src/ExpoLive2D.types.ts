@@ -4,7 +4,7 @@ export type ExpoLive2DViewProps = {
   modelPath: string;
   scale?: number;
   gyroEnabled?: boolean;
-  onLoad?: (event: { nativeEvent: { url: string } }) => void;
+  onLoad?: (event: { nativeEvent: { url?: string; motionGroups?: string[] } }) => void;
   style?: StyleProp<ViewStyle>;
 };
 

@@ -20,6 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Get the number of motions in a group
 - (NSInteger)motionCountForGroup:(NSString *)group;
 
+/// Get the names of all available motion groups
+- (NSArray<NSString *> *)availableMotionGroups;
+
 /// Set model scale (default 1.0)
 - (void)setScale:(float)scale;
 

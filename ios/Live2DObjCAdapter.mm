@@ -40,7 +40,7 @@ using namespace Live2D::Cubism::Framework::Rendering;
             absolutePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:path];
         }
     }
-    NSLog(@"[Live2D] Final resolved model path: %@", absolutePath);
+    NSLog(@"[Live2D][%p] Final resolved model path: %@", self, absolutePath);
 
     NSData *settingData = [NSData dataWithContentsOfFile:absolutePath];
     if (!settingData) {
@@ -125,6 +125,17 @@ using namespace Live2D::Cubism::Framework::Rendering;
 - (NSInteger)motionCountForGroup:(NSString *)group {
     if (!_model) return 0;
     return _model->GetMotionCount([group UTF8String]);
+}
+
+- (NSArray<NSString *> *)availableMotionGroups {
+    if (!_model) return @[];
+    
+    std::vector<std::string> groups = _model->GetMotionGroupNames();
+    NSMutableArray<NSString *> *array = [NSMutableArray arrayWithCapacity:groups.size()];
+    for (const auto& group : groups) {
+        [array addObject:[NSString stringWithUTF8String:group.c_str()]];
+    }
+    return array;
 }
 
 - (void)setScale:(float)scale {

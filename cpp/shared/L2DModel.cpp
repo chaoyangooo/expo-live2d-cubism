@@ -222,7 +222,9 @@ std::string L2DModel::StartMotionByGroupIndex(const csmChar* group, csmInt32 ind
     }
 
     _motionManager->StartMotionPriority(targetMotion, false, 2);
-    _platform->Log("[Live2D] Playing motion: " + std::string(key.GetRawString()));
+    char msg[256];
+    snprintf(msg, sizeof(msg), "[Live2D][%p] Playing motion: %s", this, key.GetRawString());
+    _platform->Log(msg);
 
     // Return sound file path if available in model settings
     if (_setting) {
@@ -301,11 +303,14 @@ void L2DModel::Draw(CubismMatrix44& projection) {
     csmFloat32 dragX = _dragManager->GetX();
     csmFloat32 dragY = _dragManager->GetY();
 
-    // Update motions
-    _motionManager->UpdateMotion(_model, delta);
-
-    // Apply parameters
+    // Apply base parameters first
     _model->LoadParameters();
+
+    // Update motions on top of base parameters
+    _motionManager->UpdateMotion(_model, delta);
+    
+    // Save parameters state so that physics and next frame's motion overlap correctly
+    _model->SaveParameters();
 
     // Drag → head/eye/body
     _model->AddParameterValue(_idParamAngleX,     dragX * 30.0f);
@@ -360,6 +365,20 @@ bool L2DModel::IsReadyToDraw() const { return _readyToDraw; }
 
 csmInt32 L2DModel::GetExpressionCount() const {
     return _expressions.GetSize();
+}
+
+std::vector<std::string> L2DModel::GetMotionGroupNames() const {
+    std::vector<std::string> groups;
+    if (!_setting) return groups;
+    
+    csmInt32 count = _setting->GetMotionGroupCount();
+    for (csmInt32 i = 0; i < count; i++) {
+        const csmChar* groupName = _setting->GetMotionGroupName(i);
+        if (groupName) {
+            groups.push_back(std::string(groupName));
+        }
+    }
+    return groups;
 }
 
 void L2DModel::LoadExpressions() {

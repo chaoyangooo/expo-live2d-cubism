@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "Platform.hpp"
 #include "Model/CubismUserModel.hpp"
 #include "CubismModelSettingJson.hpp"
@@ -44,6 +47,9 @@ public:
 
     /// Get available expression count
     csmInt32 GetExpressionCount() const;
+
+    /// Get all available motion group names
+    std::vector<std::string> GetMotionGroupNames() const;
 
     bool IsModelLoaded() const;
     bool IsReadyToDraw() const;
