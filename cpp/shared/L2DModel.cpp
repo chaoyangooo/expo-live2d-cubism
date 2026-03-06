@@ -114,6 +114,17 @@ bool L2DModel::LoadModelData(const csmByte* settingBuf, csmSizeInt settingSize, 
         _platform->Log("[Live2D] EyeBlink enabled");
     }
 
+    // Pose
+    const char* poseFile = _setting->GetPoseFileName();
+    if (poseFile && strlen(poseFile) > 0) {
+        std::string posePath = _modelDir + "/" + poseFile;
+        auto poseData = _platform->LoadFile(posePath);
+        if (!poseData.empty()) {
+            LoadPose(poseData.data(), static_cast<csmSizeInt>(poseData.size()));
+            _platform->Log("[Live2D] Pose loaded: " + std::string(poseFile));
+        }
+    }
+
     // Breath
     _breath = CubismBreath::Create();
     {
@@ -341,6 +352,9 @@ void L2DModel::Draw(CubismMatrix44& projection) {
 
     // Expression
     if (_expressionManager) _expressionManager->UpdateMotion(_model, delta);
+
+    // Pose
+    if (_pose) _pose->UpdateParameters(_model, delta);
 
     _model->Update();
 
