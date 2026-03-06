@@ -27,17 +27,20 @@ using namespace Live2D::Cubism::Framework::Rendering;
     _audioEngine = [[L2DAudioEngine alloc] init];
     _scale = 1.0f;
 
-    // Resolve path
+    // Resolve path: priority to Resource Bundle, then Main Bundle
     NSString *absolutePath = path;
     if (![path hasPrefix:@"/"]) {
         NSBundle *bundle = L2DGetResourceBundle();
         if (bundle) {
             absolutePath = [[bundle resourcePath] stringByAppendingPathComponent:path];
-        } else {
+        }
+        
+        // Fallback to Main Bundle if file not found in resource bundle (or bundle is nil)
+        if (bundle == nil || ![[NSFileManager defaultManager] fileExistsAtPath:absolutePath]) {
             absolutePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:path];
         }
     }
-    NSLog(@"[Live2D] Model path: %@", absolutePath);
+    NSLog(@"[Live2D] Final resolved model path: %@", absolutePath);
 
     NSData *settingData = [NSData dataWithContentsOfFile:absolutePath];
     if (!settingData) {
