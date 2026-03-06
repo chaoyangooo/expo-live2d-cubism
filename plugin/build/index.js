@@ -58,10 +58,21 @@ const withLive2DModelsIos = (config, { modelPath }) => {
         const projectRoot = config.modRequest.projectRoot;
         const srcPath = path_1.default.resolve(projectRoot, modelPath);
         if (fs_extra_1.default.existsSync(srcPath)) {
-            // Add the folder reference if it doesn't already exist.
-            // addResourceFile internally handles adding to the main group and target.
-            // passing `isFolderRef: true` makes it a blue folder.
-            xcodeProject.addResourceFile('live2d-models', { target: config.modRequest.projectName }, config.modRequest.projectName);
+            // Manually add the folder reference to bypass xcode library's `addResourceFile` bug
+            // where it attempts to correct paths for 'Resources' group and crashes on null.
+            const pbxFile = require('xcode/lib/pbxFile');
+            const fileOptions = { target: config.modRequest.projectName, lastKnownFileType: 'folder' };
+            const file = new pbxFile('live2d-models', fileOptions);
+            file.uuid = xcodeProject.generateUuid();
+            file.fileRef = xcodeProject.generateUuid();
+            xcodeProject.addToPbxBuildFileSection(file);
+            xcodeProject.addToPbxFileReferenceSection(file);
+            xcodeProject.addToPbxResourcesBuildPhase(file);
+            const projectName = config.modRequest.projectName || 'app';
+            const group = config_plugins_1.IOSConfig.XcodeUtils.ensureGroupRecursively(xcodeProject, projectName);
+            if (group && group.children) {
+                group.children.push({ value: file.fileRef, comment: file.basename });
+            }
             console.log(`[expo-live2d-cubism] Added folder reference 'live2d-models' to Xcode project.`);
         }
         return config;
