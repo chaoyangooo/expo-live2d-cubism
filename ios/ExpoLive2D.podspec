@@ -46,10 +46,9 @@ Pod::Spec.new do |s|
                      "Vendor/Framework/src/**/*.{hpp,h}",
                      "*.hpp"
   
-  # Runtime resources: model assets + GLSL shader files
+  # Runtime resources: GLSL shader files
   s.resource_bundles = {
     'ExpoLive2DAssets' => [
-      'Resources/**/*',
       'Vendor/Framework/src/Rendering/OpenGL/Shaders/StandardES/*.{vert,frag}'
     ]
   }
