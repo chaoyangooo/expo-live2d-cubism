@@ -7,6 +7,16 @@
   },
   "description": "Cross-platform Live2D native module for Expo and React Native",
   "main": "index.ts",
+  "files": [
+    "src",
+    "cpp",
+    "android",
+    "ios",
+    "plugin/build",
+    "app.plugin.js",
+    "expo-module.config.json",
+    "index.ts"
+  ],
   "keywords": [
     "react-native",
     "expo",
