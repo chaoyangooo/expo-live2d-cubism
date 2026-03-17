@@ -33,8 +33,8 @@ const withLive2DModelsAndroid: ConfigPlugin<Live2DModelsPluginProps> = (
       );
 
       if (fs.existsSync(srcPath)) {
-        // Ensure destination directory exists
-        fs.ensureDirSync(destPath);
+        // Ensure destination directory is clean
+        fs.emptyDirSync(destPath);
         // Copy files
         fs.copySync(srcPath, destPath, { overwrite: true });
         console.log(`[expo-live2d-cubism] Copied models to Android assets: ${destPath}`);
@@ -68,7 +68,8 @@ const withLive2DModelsIos: ConfigPlugin<Live2DModelsPluginProps> = (
       );
 
       if (fs.existsSync(srcPath)) {
-        fs.ensureDirSync(destPath);
+        // Ensure destination directory is clean
+        fs.emptyDirSync(destPath);
         fs.copySync(srcPath, destPath, { overwrite: true });
         console.log(`[expo-live2d-cubism] Copied models to iOS project: ${destPath}`);
       } else {
