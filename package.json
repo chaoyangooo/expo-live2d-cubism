@@ -38,10 +38,12 @@
     "react": "*",
     "react-native": "*"
   },
+  "dependencies": {
+    "fs-extra": "^11.3.4"
+  },
   "devDependencies": {
     "@expo/config-plugins": "^55.0.6",
     "@types/fs-extra": "^11.0.4",
-    "fs-extra": "^11.3.4",
     "typescript": "^5.9.3"
   }
 }
