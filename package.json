@@ -1,6 +1,6 @@
 {
   "name": "expo-live2d-cubism",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "scripts": {
     "build:plugin": "cd plugin && npx tsc",
     "clean:plugin": "rm -rf plugin/build"
